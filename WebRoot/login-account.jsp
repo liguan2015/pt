@@ -17,7 +17,7 @@
         <div class="aui-title">登陆</div>
     </header>
     <div class="aui-tab" id="tab">
-        <a href="/" class="aui-tab-item">手机登陆</a>
+        <a href="login-phone.jsp" class="aui-tab-item">手机登陆</a>
         <a href="javascript:;" class="aui-tab-item aui-active">账号登陆</a>
     </div>
     <br>
@@ -26,15 +26,14 @@
             <li class="aui-list-item">
                 <div class="aui-list-item-inner">
                     <div class="aui-list-item-input">
-                        <input id="mobile" name="mobile" type="text" placeholder="手机号">
+                        <input id="mobile" name="mobile" type="text" placeholder="手机号" required="required">
                     </div>
-                    
                 </div>
             </li>
             <li class="aui-list-item">
                 <div class="aui-list-item-inner">
                     <div class="aui-list-item-input">
-                        <input id="password" name="password" type="text" placeholder="请输入密码">
+                        <input id="password" name="password" type="password" placeholder="请输入密码" required="required">
                     </div>
                 </div>
             </li>
@@ -50,7 +49,7 @@
                 </div>
             </li>
         </ul>
-        <div><input type="hidden" name="token" value="${token}"></div>
+        <div><input id="token" type="hidden" name="token" value="${token}"></div>
     </div>
 </body>
 <script type="text/javascript">
@@ -69,14 +68,12 @@
 				data:{
 					mobile:m,
 					password:p,
-					token:t,
-					typeid:c
+					token:t
 				},
 				success:function(data){
+					console.log(data);
 					if(data.access_token==null){
-						alert("密码错误,请重试");
-					}else{
-						alert(data.access_token);
+						alert("密码错误");
 					}
 				}
 			})

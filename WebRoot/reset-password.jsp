@@ -22,31 +22,24 @@
             <li class="aui-list-item">
                 <div class="aui-list-item-inner">
                     <div class="aui-list-item-input">
-                        <input id="mobile" name="mobile" type="text" placeholder="请输入手机号">
+                        <input id="mobile" name="mobile" type="text" placeholder="请输入手机号" required="required">
                     </div>
                 </div>
                 <div class="aui-list-item-label">
-                    <div class="aui-btn aui-btn-info">获取验证码</div>
+                    <div id="codeBtn" class="aui-btn aui-btn-info">获取验证码</div>
                 </div>
             </li>
             <li class="aui-list-item">
                 <div class="aui-list-item-inner">
                     <div class="aui-list-item-input">
-                        <input id="smscode" name="smscode" type="text" placeholder="请输入验证码">
+                        <input id="smscode" name="smscode" type="text" placeholder="请输入验证码" required="required">
                     </div>
                 </div>
             </li>
             <li class="aui-list-item">
                 <div class="aui-list-item-inner">
                     <div class="aui-list-item-input">
-                        <input type="text" placeholder="请输入旧密码">
-                    </div>
-                </div>
-            </li>
-            <li class="aui-list-item">
-                <div class="aui-list-item-inner">
-                    <div class="aui-list-item-input">
-                        <input id="password" name="password" type="text" placeholder="请输入新密码">
+                        <input id="password" name="password" type="password" placeholder="请输入新密码" required="required">
                     </div>
                 </div>
             </li>
@@ -63,7 +56,21 @@
 <script type="text/javascript">
 	$(function(){
 		$("#codeBtn").click(function(){
+			var c=$("#typeid").val();
+			var m=$("#mobile").val();
+			var t=$("#token").val();
 			
+			$.ajax({
+				url:'/getCode',
+				dataType:'json',
+				type:'post',
+				async:false,
+				data:{
+					typeid:c,
+					mobile:m,
+					token:t
+				},
+			});
 		});
 		$("#submitBtn").click(function(){
 			var m=$("#mobile").val();
@@ -83,8 +90,11 @@
 					smscode:c
 				},
 				success:function(data){
-					if(data.success==true){
+					console.log(data);
+					if(data.success){
 						alert(data.data);
+					}else{
+						alert("验证码错误");
 					}
 				}
 			})

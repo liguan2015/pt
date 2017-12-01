@@ -60,13 +60,13 @@ public class IndexController extends Controller {
 			String certno = getPara("certno");
 			name = mobile;
 			Map<String, String> para = new HashMap<String, String>();
-			para.put(name, name);
-			para.put(password, password);
-			para.put(smscode, smscode);
-			para.put(mobile, mobile);
-			para.put(certno, certno);
+			para.put("name", name);
+			para.put("password", password);
+			para.put("smscode", smscode);
+			para.put("mobile", mobile);
+			para.put("certno", certno);
 			String url = "http://183.6.161.195:9000/api/Subscriber/Ad?"
-			+ getSignStr("website_9A39C2A8", "1B4245E3-B1F1-4F76-9D43-2856FB9DBE31");
+					+ getSignStr("website_9A39C2A8", "1B4245E3-B1F1-4F76-9D43-2856FB9DBE31");
 			renderJson(responseToJsonByPost(url, para));
 		}
 	}
@@ -79,9 +79,9 @@ public class IndexController extends Controller {
 			String type = getPara("typeid");
 			String mobile = getPara("mobile");
 			Map<String, String> para = new HashMap<String, String>();
-			para.put(mobile, mobile);
-			para.put(type, type);
-			renderJson(responseToJsonByPost(url, para));
+			para.put("mobile", mobile);
+			para.put("typeid", type);
+			responseToJsonByPost(url, para);
 		} else {
 			System.out.println("error");
 		}
@@ -107,8 +107,8 @@ public class IndexController extends Controller {
 		boolean result = false;
 		String clientToken = getPara("token");
 		Object serverToken = getSession().getAttribute("token");
-		System.out.println(clientToken);
-		System.out.println(serverToken);
+		System.out.println("clientToken:" + clientToken);
+		System.out.println("serverToken:" + serverToken);
 		if (clientToken == null) {
 			return result;
 		}
@@ -146,6 +146,8 @@ public class IndexController extends Controller {
 	public String responseToJsonByGet(String url) {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		HttpGet httpGet = new HttpGet(url);
+		System.out.println("向URL:" + url + "，发送get请求");
+
 		CloseableHttpResponse response1 = null;
 		HttpEntity entity1 = null;
 		String result = "";
@@ -162,6 +164,7 @@ public class IndexController extends Controller {
 				e.printStackTrace();
 			}
 		}
+		System.out.println("接口返回的数据：" + result);
 		return result;
 	}
 
@@ -169,11 +172,11 @@ public class IndexController extends Controller {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		HttpPost httpPost = new HttpPost(url);
 		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-
+		System.out.println("向URL:" + url + "，发送post请求");
 		for (String str : map.keySet()) {
 			nvps.add(new BasicNameValuePair(str, map.get(str)));
+			System.out.println("post请求的参数：" + str + ":" + map.get(str));
 		}
-
 		CloseableHttpResponse response2 = null;
 		HttpEntity entity2 = null;
 		String result = "";
@@ -191,6 +194,7 @@ public class IndexController extends Controller {
 				e.printStackTrace();
 			}
 		}
+		System.out.println("接口返回的数据：" + result);
 		return result;
 	}
 }

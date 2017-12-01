@@ -26,7 +26,7 @@
             <li class="aui-list-item">
                 <div class="aui-list-item-inner">
                     <div class="aui-list-item-input">
-                        <input id="mobile" name="mobile" type="text" placeholder="请输入手机号">
+                        <input id="mobile" name="mobile" type="text" placeholder="请输入手机号" required="required">
                     </div>
                 </div>
                 <div class="aui-list-item-label">
@@ -36,7 +36,7 @@
             <li class="aui-list-item">
                 <div class="aui-list-item-inner">
                     <div class="aui-list-item-input">
-                        <input id="password" name="password" type="text" placeholder="请输入验证码">
+                        <input id="password" name="password" type="text" placeholder="请输入验证码" required="required">
                     </div>
                 </div>
             </li>
@@ -56,7 +56,20 @@
         <div><input id="typeid" type="hidden" name="typeid" value="2"></div>
     </div>
 </body>
+<script type="etxt/javascript" src="js/aui-dialog.js"></script>
 <script type="text/javascript">
+	/*
+	var dialog = new auiDialog();
+	function openDialog(text){
+		dialog.alert({
+            title:"信息",
+            msg:'请检查'+text,
+            buttons:['确定']
+        },function(ret){
+            console.log(ret)
+        })
+	}
+	*/
 	$(function(){
 		$("#codeBtn").click(function(){
 			var c=$("#typeid").val();
@@ -79,8 +92,16 @@
 			var m=$("#mobile").val();
 			var p=$("#password").val();
 			var t=$("#token").val();
-			
-			
+			/*
+			if(m==null){
+				openDialog('手机号');
+				return
+			}
+			if(p==null){
+				openDialog('密码');
+				return
+			}
+			*/
 			$.ajax({
 				url:'/login',
 				dataType:'json',
@@ -92,14 +113,16 @@
 					token:t,
 				},
 				success:function(data){
+					console.log(data);
 					if(data.access_token==null){
-						alert("验证码错误,请重试");
-					}else{
-						alert(data.access_token);
+						alert("验证码错误");
 					}
 				}
 			})
 		});
+		
 	})
+
+	
 </script>
 </html>
