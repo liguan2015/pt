@@ -76,7 +76,7 @@ public class IndexController extends Controller {
 		if (checkToken()) {
 			String url = "http://183.6.161.195:9000/api/Subscriber/SendSms?"
 					+ getSignStr("website_9A39C2A8", "1B4245E3-B1F1-4F76-9D43-2856FB9DBE31");
-			String type = getRequest().getParameter("typeid");
+			String type = getPara("typeid");
 			String mobile = getPara("mobile");
 			Map<String, String> para = new HashMap<String, String>();
 			para.put(mobile, mobile);
@@ -107,6 +107,8 @@ public class IndexController extends Controller {
 		boolean result = false;
 		String clientToken = getPara("token");
 		Object serverToken = getSession().getAttribute("token");
+		System.out.println(clientToken);
+		System.out.println(serverToken);
 		if (clientToken == null) {
 			return result;
 		}
