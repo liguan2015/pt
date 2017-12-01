@@ -75,6 +75,8 @@
 				success:function(data){
 					if(data.access_token==null){
 						alert("密码错误,请重试");
+					}else{
+						alert(data.access_token);
 					}
 				}
 			})

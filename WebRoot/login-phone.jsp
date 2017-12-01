@@ -88,11 +88,12 @@
 					mobile:m,
 					password:p,
 					token:t,
-					typeid:c
 				},
 				success:function(data){
 					if(data.access_token==null){
 						alert("验证码错误,请重试");
+					}else{
+						alert(data.access_token);
 					}
 				}
 			})
