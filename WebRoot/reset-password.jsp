@@ -79,6 +79,21 @@
 			var p=$("#password").val();
 			var t=$("#token").val();
 			
+			if(m==""){
+				openDialog('手机号不能为空!');
+				return;
+			}
+			
+			
+			if(c==""){
+				openDialog('验证码不能为空!');
+				return;
+			}
+			if(p==""){
+				openDialog('密码不能为空!');
+				return;
+			}
+			
 			$.ajax({
 				url:'/resetPsd',
 				dataType:'json',
@@ -91,12 +106,23 @@
 					smscode:c
 				},
 				success:function(data){
-					if(data.success==true){
-						alert(data.data);
+					console.log(data);
+					if(data.success){
+						openDialog(data.errmsg);
+					}else{
+						openDialog("验证码错误");
 					}
 				}
 			})
 		})
 	})
+	var dialog = new auiDialog();
+	function openDialog(text){
+		dialog.alert({
+            title:"信息",
+            msg:text,
+            buttons:['确定']
+        })
+	}
 </script>
 </html>

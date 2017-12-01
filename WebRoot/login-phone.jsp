@@ -83,7 +83,16 @@
 			var p=$("#password").val();
 			var t=$("#token").val();
 			
+			if(m==""){
+				openDialog('手机号不能为空!');
+				return;
+			}
 			
+			if(p==""){
+				openDialog('密码不能为空!');
+				return;
+			}
+		
 			$.ajax({
 				url:'/login',
 				dataType:'json',
@@ -95,14 +104,23 @@
 					token:t,
 				},
 				success:function(data){
+					console.log(data);
 					if(data.access_token==null){
-						alert("验证码错误,请重试");
-					}else{
-						alert(data.access_token);
+						openDialog("验证码错误");
 					}
 				}
 			})
 		});
+		
 	})
+	
+	var dialog = new auiDialog();
+	function openDialog(text){
+		dialog.alert({
+            title:"信息",
+            msg:text,
+            buttons:['确定']
+        })
+	}
 </script>
 </html>

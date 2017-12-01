@@ -6,8 +6,9 @@
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title></title>
-    <link rel="stylesheet" type="text/css" href="css\aui.css" />
-    <script type="text/javascript" src="js\jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/aui.css" />
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/js/aui-dialog.js"></script>
 </head>
 <body>
     <header class="aui-bar aui-bar-nav">
@@ -28,13 +29,12 @@
                     <div class="aui-list-item-input">
                         <input id="mobile" name="mobile" type="text" placeholder="手机号">
                     </div>
-                    
                 </div>
             </li>
             <li class="aui-list-item">
                 <div class="aui-list-item-inner">
                     <div class="aui-list-item-input">
-                        <input id="password" name="password" type="text" placeholder="请输入密码">
+                        <input id="password" name="password" type="password" placeholder="请输入密码">
                     </div>
                 </div>
             </li>
@@ -60,6 +60,15 @@
 			var p=$("#password").val();
 			var t=$("#token").val();
 			
+			if(m==""){
+				openDialog('手机号不能为空!');
+				return;
+			}
+			
+			if(p==""){
+				openDialog('密码不能为空!');
+				return;
+			}
 			
 			$.ajax({
 				url:'/login',
@@ -69,18 +78,25 @@
 				data:{
 					mobile:m,
 					password:p,
-					token:t,
-					typeid:c
+					token:t
 				},
 				success:function(data){
+					console.log(data);
 					if(data.access_token==null){
-						alert("密码错误,请重试");
-					}else{
-						alert(data.access_token);
+						openDialog("手机号或密码错误");
 					}
 				}
 			})
 		});
 	})
+	var dialog = new auiDialog();
+	function openDialog(text){
+		dialog.alert({
+            title:"信息",
+            msg:text,
+            buttons:['确定']
+        })
+	}
+	
 </script>
 </html>
