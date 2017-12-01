@@ -6,8 +6,9 @@
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title></title>
-    <link rel="stylesheet" type="text/css" href="css\aui.css" />
-    <script type="text/javascript" src="js\jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/aui.css" />
+    <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/js/aui-dialog.js"></script>
 </head>
 <body>
     <header class="aui-bar aui-bar-nav">
@@ -26,7 +27,7 @@
             <li class="aui-list-item">
                 <div class="aui-list-item-inner">
                     <div class="aui-list-item-input">
-                        <input id="mobile" name="mobile" type="text" placeholder="请输入手机号" required="required">
+                        <input id="mobile" name="mobile" type="text" placeholder="请输入手机号">
                     </div>
                 </div>
                 <div class="aui-list-item-label">
@@ -36,7 +37,7 @@
             <li class="aui-list-item">
                 <div class="aui-list-item-inner">
                     <div class="aui-list-item-input">
-                        <input id="password" name="password" type="text" placeholder="请输入验证码" required="required">
+                        <input id="password" name="password" type="text" placeholder="请输入验证码">
                     </div>
                 </div>
             </li>
@@ -56,20 +57,9 @@
         <div><input id="typeid" type="hidden" name="typeid" value="2"></div>
     </div>
 </body>
-<script type="etxt/javascript" src="js/aui-dialog.js"></script>
+
 <script type="text/javascript">
-	/*
-	var dialog = new auiDialog();
-	function openDialog(text){
-		dialog.alert({
-            title:"信息",
-            msg:'请检查'+text,
-            buttons:['确定']
-        },function(ret){
-            console.log(ret)
-        })
-	}
-	*/
+	
 	$(function(){
 		$("#codeBtn").click(function(){
 			var c=$("#typeid").val();
@@ -92,16 +82,17 @@
 			var m=$("#mobile").val();
 			var p=$("#password").val();
 			var t=$("#token").val();
-			/*
-			if(m==null){
-				openDialog('手机号');
-				return
+			
+			if(m==""){
+				openDialog('手机号不能为空!');
+				return;
 			}
-			if(p==null){
-				openDialog('密码');
-				return
+			
+			if(p==""){
+				openDialog('密码不能为空!');
+				return;
 			}
-			*/
+		
 			$.ajax({
 				url:'/login',
 				dataType:'json',
@@ -115,14 +106,21 @@
 				success:function(data){
 					console.log(data);
 					if(data.access_token==null){
-						alert("验证码错误");
+						openDialog("验证码错误");
 					}
 				}
 			})
 		});
 		
 	})
-
 	
+	var dialog = new auiDialog();
+	function openDialog(text){
+		dialog.alert({
+            title:"信息",
+            msg:text,
+            buttons:['确定']
+        })
+	}
 </script>
 </html>

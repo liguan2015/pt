@@ -6,8 +6,9 @@
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title></title>
-    <link rel="stylesheet" type="text/css" href="css\aui.css" >
-    <script type="text/javascript" src="js\jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/aui.css" >
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/js/aui-dialog.js"></script>
 </head>
 <body>
     <header class="aui-bar aui-bar-nav">
@@ -22,7 +23,7 @@
             <li class="aui-list-item">
                 <div class="aui-list-item-inner">
                     <div class="aui-list-item-input">
-                        <input id="mobile" name="mobile" type="text" placeholder="请输入手机号" required="required">
+                        <input id="mobile" name="mobile" type="text" placeholder="请输入手机号">
                     </div>
                 </div>
                 <div class="aui-list-item-label">
@@ -32,7 +33,7 @@
             <li class="aui-list-item">
                 <div class="aui-list-item-inner">
                     <div class="aui-list-item-input">
-                        <input id="smscode" name="smscode" type="text" placeholder="请输入验证码" required="required">
+                        <input id="smscode" name="smscode" type="text" placeholder="请输入验证码">
                     </div>
                 </div>
             </li>
@@ -78,6 +79,21 @@
 			var p=$("#password").val();
 			var t=$("#token").val();
 			
+			if(m==""){
+				openDialog('手机号不能为空!');
+				return;
+			}
+			
+			
+			if(c==""){
+				openDialog('验证码不能为空!');
+				return;
+			}
+			if(p==""){
+				openDialog('密码不能为空!');
+				return;
+			}
+			
 			$.ajax({
 				url:'/resetPsd',
 				dataType:'json',
@@ -92,13 +108,21 @@
 				success:function(data){
 					console.log(data);
 					if(data.success){
-						alert(data.data);
+						openDialog(data.errmsg);
 					}else{
-						alert("验证码错误");
+						openDialog("验证码错误");
 					}
 				}
 			})
 		})
 	})
+	var dialog = new auiDialog();
+	function openDialog(text){
+		dialog.alert({
+            title:"信息",
+            msg:text,
+            buttons:['确定']
+        })
+	}
 </script>
 </html>

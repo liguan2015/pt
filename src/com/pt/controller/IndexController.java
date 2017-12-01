@@ -43,7 +43,7 @@ public class IndexController extends Controller {
 			String mobile = getPara("mobile");
 			String password = getPara("password");
 			String url = "http://183.6.161.195:9000/api/Auth/GetMobileToken?mobile=" + mobile + "&password=" + password
-					+ "&" + getSignStr("website_9A39C2A8", "1B4245E3-B1F1-4F76-9D43-2856FB9DBE31\r\n" + "");
+					+ "&" + getSignStr("website_9A39C2A8", "1B4245E3-B1F1-4F76-9D43-2856FB9DBE31");
 			renderJson(responseToJsonByGet(url));
 		} else {
 
@@ -65,7 +65,7 @@ public class IndexController extends Controller {
 			para.put("smscode", smscode);
 			para.put("mobile", mobile);
 			para.put("certno", certno);
-			String url = "http://183.6.161.195:9000/api/Subscriber/Ad?"
+			String url = "http://183.6.161.195:9000/api/Subscriber/AddByMobile?"
 					+ getSignStr("website_9A39C2A8", "1B4245E3-B1F1-4F76-9D43-2856FB9DBE31");
 			renderJson(responseToJsonByPost(url, para));
 		}
@@ -94,7 +94,7 @@ public class IndexController extends Controller {
 			String password = getPara("password");
 			String smscode = getPara("smscode");
 			String url = "http://183.6.161.195:9000/api/Subscriber/ResetPassword?"
-					+ getSignStr("website_9A39C2A8", "1B4245E3-B1F1-4F76-9D43-2856FB9DBE31\r\n" + "");
+					+ getSignStr("website_9A39C2A8", "1B4245E3-B1F1-4F76-9D43-2856FB9DBE31");
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("mobile", mobile);
 			map.put("password", password);
@@ -156,7 +156,7 @@ public class IndexController extends Controller {
 			entity1 = response1.getEntity();
 			result = EntityUtils.toString(entity1);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		} finally {
 			try {
 				response1.close();
@@ -186,7 +186,7 @@ public class IndexController extends Controller {
 			entity2 = response2.getEntity();
 			result = EntityUtils.toString(entity2);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		} finally {
 			try {
 				response2.close();
