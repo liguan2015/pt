@@ -92,11 +92,11 @@
 				},
 				success:function(data){
 					if(data.access_token==null){
-						alert("短信码或密码错误,请重试");
+						alert("验证码错误,请重试");
 					}
 				}
 			})
-		})
+		});
 	})
 </script>
 </html>

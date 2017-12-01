@@ -26,7 +26,7 @@
             <li class="aui-list-item">
                 <div class="aui-list-item-inner">
                     <div class="aui-list-item-input">
-                        <input type="text" placeholder="手机号">
+                        <input id="mobile" name="mobile" type="text" placeholder="手机号">
                     </div>
                     
                 </div>
@@ -34,13 +34,13 @@
             <li class="aui-list-item">
                 <div class="aui-list-item-inner">
                     <div class="aui-list-item-input">
-                        <input type="text" placeholder="请输入密码">
+                        <input id="password" name="password" type="text" placeholder="请输入密码">
                     </div>
                 </div>
             </li>
             <li class="aui-list-item">
                 <div class="aui-list-item-inner aui-list-item-center aui-list-item-btn">
-                    <div class="aui-btn aui-btn-info aui-btn-block">登陆</div>
+                    <div id="loginBtn" class="aui-btn aui-btn-info aui-btn-block">登陆</div>
                 </div>
             </li>
             <li class="aui-list-item">
@@ -53,4 +53,32 @@
         <div><input type="hidden" name="token" value="${token}"></div>
     </div>
 </body>
+<script type="text/javascript">
+	$(function(){
+		$("#loginBtn").click(function(){
+			var m=$("#mobile").val();
+			var p=$("#password").val();
+			var t=$("#token").val();
+			
+			
+			$.ajax({
+				url:'/login',
+				dataType:'json',
+				type:'post',
+				async:false,
+				data:{
+					mobile:m,
+					password:p,
+					token:t,
+					typeid:c
+				},
+				success:function(data){
+					if(data.access_token==null){
+						alert("密码错误,请重试");
+					}
+				}
+			})
+		});
+	})
+</script>
 </html>
