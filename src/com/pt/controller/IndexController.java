@@ -66,7 +66,7 @@ public class IndexController extends Controller {
 			para.put(mobile, mobile);
 			para.put(certno, certno);
 			String url = "http://183.6.161.195:9000/api/Subscriber/Ad?"
-					+ getSignStr("website_9A39C2A8", "1B4245E3-B1F1-4F76-9D43-2856FB9DBE31");
+			+ getSignStr("website_9A39C2A8", "1B4245E3-B1F1-4F76-9D43-2856FB9DBE31");
 			renderJson(responseToJsonByPost(url, para));
 		}
 	}
@@ -81,7 +81,7 @@ public class IndexController extends Controller {
 			Map<String, String> para = new HashMap<String, String>();
 			para.put(mobile, mobile);
 			para.put(type, type);
-			responseToJsonByPost(url, para);
+			renderJson(responseToJsonByPost(url, para));
 		} else {
 			System.out.println("error");
 		}
