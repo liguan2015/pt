@@ -46,7 +46,7 @@ public class IndexController extends Controller {
 					+ "&" + getSignStr("website_9A39C2A8", "1B4245E3-B1F1-4F76-9D43-2856FB9DBE31\r\n" + "");
 			renderJson(responseToJsonByGet(url));
 		} else {
-			System.out.println("别特么重复按啊");
+
 		}
 	}
 
@@ -73,7 +73,7 @@ public class IndexController extends Controller {
 	}
 
 	
-	@ActionKey("getCode")
+	@ActionKey("/getCode")
 	public void getCode() throws Exception {
 		if (checkToken()) {
 			String url = "http://183.6.161.195:9000/api/Subscriber/SendSms?" 
