@@ -59,28 +59,26 @@ public class IndexController extends Controller {
 			String mobile = getPara("mobile");
 			String certno = getPara("certno");
 			name = mobile;
-			Map<String,String> para = new HashMap<String,String>();
+			Map<String, String> para = new HashMap<String, String>();
 			para.put(name, name);
 			para.put(password, password);
 			para.put(smscode, smscode);
 			para.put(mobile, mobile);
 			para.put(certno, certno);
-			String result = "";
 			String url = "http://183.6.161.195:9000/api/Subscriber/Ad?"
 			+ getSignStr("website_9A39C2A8", "1B4245E3-B1F1-4F76-9D43-2856FB9DBE31");
 			renderJson(responseToJsonByPost(url, para));
 		}
 	}
 
-	
 	@ActionKey("/getCode")
 	public void getCode() throws Exception {
 		if (checkToken()) {
-			String url = "http://183.6.161.195:9000/api/Subscriber/SendSms?" 
+			String url = "http://183.6.161.195:9000/api/Subscriber/SendSms?"
 					+ getSignStr("website_9A39C2A8", "1B4245E3-B1F1-4F76-9D43-2856FB9DBE31");
 			String type = getPara("typeid");
 			String mobile = getPara("mobile");
-			Map<String,String> para = new HashMap<String,String>();
+			Map<String, String> para = new HashMap<String, String>();
 			para.put(mobile, mobile);
 			para.put(type, type);
 			renderJson(responseToJsonByPost(url, para));
@@ -109,6 +107,8 @@ public class IndexController extends Controller {
 		boolean result = false;
 		String clientToken = getPara("token");
 		Object serverToken = getSession().getAttribute("token");
+		System.out.println(clientToken);
+		System.out.println(serverToken);
 		if (clientToken == null) {
 			return result;
 		}

@@ -61,6 +61,7 @@
 		$("#codeBtn").click(function(){
 			var c=$("#typeid").val();
 			var m=$("#mobile").val();
+			var t=$("#token").val();
 			
 			$.ajax({
 				url:'/getCode',
@@ -69,7 +70,8 @@
 				async:false,
 				data:{
 					typeid:c,
-					mobile:m
+					mobile:m,
+					token:t
 				},
 			});
 		});
