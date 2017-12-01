@@ -17,7 +17,7 @@
         <div class="aui-title">登陆</div>
     </header>
     <div class="aui-tab" id="tab">
-        <a href="/" class="aui-tab-item">手机登陆</a>
+        <a href="login-phone.jsp" class="aui-tab-item">手机登陆</a>
         <a href="javascript:;" class="aui-tab-item aui-active">账号登陆</a>
     </div>
     <br>
@@ -50,7 +50,7 @@
                 </div>
             </li>
         </ul>
-        <div><input type="hidden" name="token" value="${token}"></div>
+        <div><input id="token" type="hidden" name="token" value="${token}"></div>
     </div>
 </body>
 <script type="text/javascript">

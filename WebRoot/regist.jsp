@@ -1,10 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +8,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
 	<title>注册</title>
 	<link rel="stylesheet" type="text/css" href="css/aui.css" />
-	<script type="text/javascript" src="/js/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="/js/aui-dialog.js"></script>
 	<script type="text/javascript"> 
 		var countdown=60; 
 		function settime(obj) { 
@@ -28,46 +24,100 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		    countdown--; 
     		} 
 			setTimeout(function() {settime(obj) },1000) ;
-			
 		} 
-		$(document).ready(function() {
+		
+		$(function() {
 	        $("#codeBtn").click(function () {
 	        	settime(this);
-	        	var name = $("#name").val();
-	        	var smscode = $("#smscode").val();
-	        	var password = $("#password").val();
-	        	var mobile = $("#mobile").val();
-	        	var certno = $("#certno").val();
-	        	var typeid = $("#typeid").val();
+	        	var mo = $("#mobile").val();
+	        	var ty = $("#typeid").val();
+	        	var to = $("#token").val();
+	        	
 	            $.ajax({
-	                type:"POST",//提交请求的方式
-	                url:'/getCode',
-	                //dataType:"json",//没有这个，将把后台放会的json解析成字符串
+	            	url:'/getCode',
+	                dataType:'json' ,
+	                type:'post',
+	                async:false,
 	                data:{
-	                	name:name,
-	                	smscode:smscode,
-	                	password:password,
-	                	mobile:mobile,
-	                	certno:certno,
-	                	typeid:typeid,
-	                	},
-	                async:false,//是否异步
-	                /*error:function(request) {//请求出错
-	                    alert("errmsg");
+	                	mobile:mo,
+	                	typeid:ty,
+	                	token:to
 	                },
-	                success:function(data) {//获得返回值
-	                    alert("success");
-	                }*/
-	            })
-
+	        	});
+	      	});  
+	        
+	        $("#registBtn").click(function () {
+	        	if($("#protocal").is(':checked')) {
+	        		var smscode = $("#smscode").val();
+		        	var password = $("#password").val();
+		        	var mobile = $("#mobile").val();
+		        	var certno = $("#certno").val();
+		        	var token = $("#token").val();
+		        	
+		        	if(checkMobile()){
+		        		if (checkPassword()) {
+		        			$.ajax({
+				            	url:'/regist',
+				            	type:'post',
+				                dataType:'json' ,//没有这个，将把后台放会的json解析成字符串
+				                data:{
+				                	smscode:smscode,
+				                	password:password,
+				                	mobile:mobile,
+				                	certno:certno,
+				                	token:token,
+				                	},
+				                async:false,//是否异步
+				                success:function(data) {//获得返回值
+				                	if(data.success) {
+				                		mydialog("注册成功","你已注册成功");
+				                	}
+				                	else {
+				                		mydialog("注册失败",data.errmsg);
+				                	}
+				                }
+				            })
+						}
+		        	}
+				}
 	        });
 	    });
+
+		
+		var dialog = new auiDialog();
+		function mydialog(title,msg)  {
+			dialog.alert({
+			    title:title,
+			    msg:msg,
+			    buttons:['确定']
+			},function(ret){
+			    console.log(ret)
+			})
+		}
+		
+		function checkMobile(){ 
+		    var sMobile = $("#mobile").val(); 
+		    if(!(/^1[3|4|5|8][0-9]\d{8}$/.test(sMobile))){ 
+		    	mydialog("注册失败","手机号不正确");
+		    	return false;
+		    } 
+		    return true;
+		}		
+		
+		function checkPassword() {
+			var spassword = $("#password").val();
+			if(!(/^\w{6,16}$/.test(spassword))){
+				mydialog("注册失败","密码在6-16位之间");
+				return false;
+			}
+			return true;
+		}
 	</script>
 </head>
 <body>
 	<div>
 		<header class="aui-bar aui-bar-nav">
-    		<a class="aui-pull-left aui-btn">
+    		<a class="aui-pull-left aui-btn" href="login-phone.jsp">
         		<span class="aui-iconfont aui-icon-left"></span>
     		</a>
     		<div class="aui-title">注册</div>
@@ -91,7 +141,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	<li class="aui-list-item">
             	<div class="aui-list-item-inner">                	
                 	<div class="aui-list-item-input">
-                    	<input id="mobile" type="text" placeholder="请输入手机号">
+                    	<input id="mobile" type="text" placeholder="请输入手机号" required="required">
                 	</div>
                 	<div class="aui-list-item-label">
                     	<input type="button" id="codeBtn" class="aui-btn aui-btn-info" value="获取验证码" >
@@ -104,7 +154,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	<li class="aui-list-item">
             	<div class="aui-list-item-inner">                	
                 	<div class="aui-list-item-input">
-                    	<input id="smscode" type="text" placeholder="请输入验证码">
+                    	<input id="smscode" type="text" placeholder="请输入验证码" required="required">
                 	</div>
             	</div>
         	</li>
@@ -114,7 +164,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	<li class="aui-list-item">
             	<div class="aui-list-item-inner">                	
                 	<div class="aui-list-item-input">
-                    	<input id="password" type="text" placeholder="请输入密码">
+                    	<input id="password" type="text" placeholder="请输入密码" required="required">
                 	</div>
             	</div>
         	</li>
@@ -124,17 +174,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	<li class="aui-list-item">
             	<div class="aui-list-item-inner">                	
                 	<div class="aui-list-item-input">
-                    	<input id="certno" type="text" placeholder="请输入身份证">
+                    	<input id="certno" type="text" placeholder="请输入身份证(非必填)" required="required">
                 	</div>
             	</div>
         	</li>
         </ul> 
         <br>
         <div>
-        	<label><input type="checkbox" name="protocal">我同意<a href="#">《广东联网售票服务系统》</a></label>
+        	<label><input type="checkbox" id="protocal">我同意<a href="#">《广东联网售票服务系统》</a></label>
         </div>
         <br>
-        <div id="registBtn" class="aui-btn aui-btn-info aui-btn-block aui-btn-sm">注册</div>       	
+        <input id="registBtn" type="button" class="aui-btn aui-btn-info aui-btn-block aui-btn-sm" value="注册"/>      	
 	</div>
 	
 	<div><input id="token" type="hidden" name="token" value="${token }"></div>

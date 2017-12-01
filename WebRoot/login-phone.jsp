@@ -6,8 +6,9 @@
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title></title>
-    <link rel="stylesheet" type="text/css" href="css\aui.css" />
-    <script type="text/javascript" src="js\jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/aui.css" />
+    <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/js/aui-dialog.js"></script>
 </head>
 <body>
     <header class="aui-bar aui-bar-nav">
@@ -56,7 +57,9 @@
         <div><input id="typeid" type="hidden" name="typeid" value="2"></div>
     </div>
 </body>
+
 <script type="text/javascript">
+	
 	$(function(){
 		$("#codeBtn").click(function(){
 			var c=$("#typeid").val();

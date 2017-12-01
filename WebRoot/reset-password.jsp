@@ -6,8 +6,9 @@
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title></title>
-    <link rel="stylesheet" type="text/css" href="css\aui.css" >
-    <script type="text/javascript" src="js\jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/aui.css" >
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/js/aui-dialog.js"></script>
 </head>
 <body>
     <header class="aui-bar aui-bar-nav">
@@ -26,7 +27,7 @@
                     </div>
                 </div>
                 <div class="aui-list-item-label">
-                    <div class="aui-btn aui-btn-info">获取验证码</div>
+                    <div id="codeBtn" class="aui-btn aui-btn-info">获取验证码</div>
                 </div>
             </li>
             <li class="aui-list-item">
@@ -39,14 +40,7 @@
             <li class="aui-list-item">
                 <div class="aui-list-item-inner">
                     <div class="aui-list-item-input">
-                        <input type="text" placeholder="请输入旧密码">
-                    </div>
-                </div>
-            </li>
-            <li class="aui-list-item">
-                <div class="aui-list-item-inner">
-                    <div class="aui-list-item-input">
-                        <input id="password" name="password" type="text" placeholder="请输入新密码">
+                        <input id="password" name="password" type="password" placeholder="请输入新密码" required="required">
                     </div>
                 </div>
             </li>
@@ -63,7 +57,21 @@
 <script type="text/javascript">
 	$(function(){
 		$("#codeBtn").click(function(){
+			var c=$("#typeid").val();
+			var m=$("#mobile").val();
+			var t=$("#token").val();
 			
+			$.ajax({
+				url:'/getCode',
+				dataType:'json',
+				type:'post',
+				async:false,
+				data:{
+					typeid:c,
+					mobile:m,
+					token:t
+				},
+			});
 		});
 		$("#submitBtn").click(function(){
 			var m=$("#mobile").val();
