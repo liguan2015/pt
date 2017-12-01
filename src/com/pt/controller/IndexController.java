@@ -52,22 +52,24 @@ public class IndexController extends Controller {
 
 	@ActionKey("/regist")
 	public void regist() throws Exception {
-		String name = null;
-		String password = getPara("password");
-		String smscode = getPara("smscode");
-		String mobile = getPara("mobile");
-		String certno = getPara("certno");
-		name = mobile;
-		Map para = new HashMap<String,String>();
-		para.put(name, name);
-		para.put(password, password);
-		para.put(smscode, smscode);
-		para.put(mobile, mobile);
-		para.put(certno, certno);
-		String result = "";
-		String url = "http://183.6.161.195:9000/api/Subscriber/Ad?"
-		+ getSignStr("website_9A39C2A8", "1B4245E3-B1F1-4F76-9D43-2856FB9DBE31");
-		result = responseToJsonByPost(url, para);
+		if (checkToken()) {
+			String name = null;
+			String password = getPara("password");
+			String smscode = getPara("smscode");
+			String mobile = getPara("mobile");
+			String certno = getPara("certno");
+			name = mobile;
+			Map para = new HashMap<String,String>();
+			para.put(name, name);
+			para.put(password, password);
+			para.put(smscode, smscode);
+			para.put(mobile, mobile);
+			para.put(certno, certno);
+			String result = "";
+			String url = "http://183.6.161.195:9000/api/Subscriber/Ad?"
+			+ getSignStr("website_9A39C2A8", "1B4245E3-B1F1-4F76-9D43-2856FB9DBE31");
+			result = responseToJsonByPost(url, para);
+		}
 	}
 
 	
