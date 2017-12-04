@@ -80,11 +80,7 @@ public class IndexController extends Controller {
 			String mobile = getPara("mobile");
 			Map<String, String> para = new HashMap<String, String>();
 			para.put("mobile", mobile);
-<<<<<<< HEAD
 			para.put("type", type);
-=======
-			para.put("typeid", type);
->>>>>>> refs/remotes/origin/master
 			responseToJsonByPost(url, para);
 		} else {
 			System.out.println("error");

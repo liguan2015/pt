@@ -60,16 +60,6 @@
 			var p=$("#password").val();
 			var t=$("#token").val();
 			
-			if(m==""){
-				openDialog('手机号不能为空!');
-				return;
-			}
-			
-			if(p==""){
-				openDialog('密码不能为空!');
-				return;
-			}
-			
 			$.ajax({
 				url:'/login',
 				dataType:'json',
@@ -83,20 +73,40 @@
 				success:function(data){
 					console.log(data);
 					if(data.access_token==null){
-						openDialog("手机号或密码错误");
+						mydialog("登陆失败","手机号或密码不正确");
 					}
 				}
 			})
 		});
 	})
 	var dialog = new auiDialog();
-	function openDialog(text){
-		dialog.alert({
-            title:"信息",
-            msg:text,
-            buttons:['确定']
-        })
-	}
+		function mydialog(title,msg)  {
+			dialog.alert({
+			    title:title,
+			    msg:msg,
+			    buttons:['确定']
+			},function(ret){
+			    console.log(ret)
+			})
+		}
+		
+		function checkMobile(){ 
+		    var sMobile = $("#mobile").val(); 
+		    if(!(/^1[3|4|5|8][0-9]\d{8}$/.test(sMobile))){ 
+		    	mydialog("登陆失败","手机号不正确");
+		    	return false;
+		    } 
+		    return true;
+		}		
+		
+		function checkPassword() {
+			var spassword = $("#password").val();
+			if(!(/^\w{6,16}$/.test(spassword))){
+				mydialog("登陆失败","密码在6-16位之间");
+				return false;
+			}
+			return true;
+		}
 	
 </script>
 </html>

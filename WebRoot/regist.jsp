@@ -181,7 +181,7 @@
         </ul> 
         <br>
         <div>
-        	<label><input type="checkbox" id="protocal">我同意<a href="#">《广东联网售票服务系统》</a></label>
+        	<label><input type="checkbox" id="protocal">我同意<a href="protocal.jsp">《广东联网售票服务系统》</a></label>
         </div>
         <br>
         <input id="registBtn" type="button" class="aui-btn aui-btn-info aui-btn-block aui-btn-sm" value="注册"/>      	
