@@ -64,7 +64,9 @@ public class IndexController extends Controller {
 			para.put("password", password);
 			para.put("smscode", smscode);
 			para.put("mobile", mobile);
-			para.put("certno", certno);
+			if (certno!=null) {
+				para.put("certno", certno);
+			}
 			String url = "http://183.6.161.195:9000/api/Subscriber/AddByMobile?"
 					+ getSignStr("website_9A39C2A8", "1B4245E3-B1F1-4F76-9D43-2856FB9DBE31");
 			renderJson(responseToJsonByPost(url, para));

@@ -98,7 +98,7 @@ var countdown=60;
 							if(data.success){
 								mydialog("修改密码成功","修改密码成功","callback");
 							}else{
-								mydialog("修改密码失败",data.errmsg,"text");
+								mydialog("修改密码失败","验证码错误","text");
 							}
 						}
 					})
@@ -128,7 +128,7 @@ var countdown=60;
 							mydialog("登陆失败","验证码错误","text");
 						}
 						else {
-							mydialog("登陆成功","登陆成功","text");
+							
 						}
 					}
 				})
@@ -198,7 +198,7 @@ var countdown=60;
 	function checkPassword() {
 		var spassword = $("#password").val();
 		if(!(/^\w{6,16}$/.test(spassword))){
-			mydialog("失败","密码在6-16位，只能为数字，字母和下划线");
+			mydialog("失败","密码在6-16位，只能为数字，字母和下划线","text");
 			return false;
 		}
 		return true;

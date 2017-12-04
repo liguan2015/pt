@@ -62,7 +62,7 @@
         	<li class="aui-list-item">
             	<div class="aui-list-item-inner">                	
                 	<div class="aui-list-item-input">
-                    	<input id="password" type="text" type="password" placeholder="请输入密码" required="required">
+                    	<input id="password"  type="password" placeholder="请输入密码" required="required">
                 	</div>
             	</div>
         	</li>
