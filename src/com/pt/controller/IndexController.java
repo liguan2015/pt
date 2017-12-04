@@ -80,7 +80,7 @@ public class IndexController extends Controller {
 			String mobile = getPara("mobile");
 			Map<String, String> para = new HashMap<String, String>();
 			para.put("mobile", mobile);
-			para.put("typeid", type);
+			para.put("type", type);
 			responseToJsonByPost(url, para);
 		} else {
 			System.out.println("error");

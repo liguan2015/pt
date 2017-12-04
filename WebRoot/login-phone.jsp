@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="aui-list-item-label">
-                    <div id="codeBtn" class="aui-btn aui-btn-info">获取验证码</div>
+                    <input type="button" id="codeBtn" class="aui-btn aui-btn-info" value="获取验证码" >
                 </div>
             </li>
             <li class="aui-list-item">
@@ -59,9 +59,23 @@
 </body>
 
 <script type="text/javascript">
-	
+		var countdown=60; 
+		function settime(obj) { 
+			if (countdown == 0) { 
+			    obj.removeAttribute("disabled");    
+			    obj.value="获取验证码"; 
+			    countdown = 60; 
+			    return;
+			} else { 
+			    obj.setAttribute("disabled", true); 
+			    obj.value="重新发送(" + countdown + ")"; 
+			    countdown--; 
+			} 
+			setTimeout(function() {settime(obj) },1000) ;
+		} 	
 	$(function(){
 		$("#codeBtn").click(function(){
+			settime(this);
 			var c=$("#typeid").val();
 			var m=$("#mobile").val();
 			var t=$("#token").val();
@@ -83,44 +97,50 @@
 			var p=$("#password").val();
 			var t=$("#token").val();
 			
-			if(m==""){
-				openDialog('手机号不能为空!');
-				return;
-			}
-			
-			if(p==""){
-				openDialog('密码不能为空!');
-				return;
-			}
-		
-			$.ajax({
-				url:'/login',
-				dataType:'json',
-				type:'post',
-				async:false,
-				data:{
-					mobile:m,
-					password:p,
-					token:t,
-				},
-				success:function(data){
-					console.log(data);
-					if(data.access_token==null){
-						openDialog("验证码错误");
+			if(checkMobile()){
+				$.ajax({
+					url:'/login',
+					dataType:'json',
+					type:'post',
+					async:false,
+					data:{
+						mobile:m,
+						password:p,
+						token:t,
+					},
+					success:function(data){
+						console.log(data);
+						if(data.access_token==null){
+							mydialog("登陆失败","验证码错误");
+						}
+						else {
+							mydialog("登陆成功","登陆成功");
+						}
 					}
-				}
-			})
+				})
+			}
 		});
 		
 	})
 	
 	var dialog = new auiDialog();
-	function openDialog(text){
+	function mydialog(title,msg)  {
 		dialog.alert({
-            title:"信息",
-            msg:text,
-            buttons:['确定']
-        })
+		    title:title,
+		    msg:msg,
+		    buttons:['确定']
+		},function(ret){
+		    console.log(ret)
+		})
 	}
+	
+	function checkMobile(){ 
+		    var sMobile = $("#mobile").val(); 
+		    if(!(/^1[3|4|5|8][0-9]\d{8}$/.test(sMobile))){ 
+		    	mydialog("注册失败","手机号不正确");
+		    	return false;
+		    } 
+		    return true;
+		}		
 </script>
 </html>

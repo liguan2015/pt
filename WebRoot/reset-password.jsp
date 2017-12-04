@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="aui-list-item-label">
-                    <div id="codeBtn" class="aui-btn aui-btn-info">获取验证码</div>
+                    <input type="button" id="codeBtn" class="aui-btn aui-btn-info" value="获取验证码" >
                 </div>
             </li>
             <li class="aui-list-item">
@@ -56,7 +56,23 @@
 </body>
 <script type="text/javascript">
 	$(function(){
+		var countdown=60; 
+		function settime(obj) { 
+    		if (countdown == 0) { 
+    		    obj.removeAttribute("disabled");    
+    		    obj.value="获取验证码"; 
+    		    countdown = 60; 
+    		    return;
+    		} else { 
+    		    obj.setAttribute("disabled", true); 
+    		    obj.value="重新发送(" + countdown + ")"; 
+    		    countdown--; 
+    		} 
+			setTimeout(function() {settime(obj) },1000) ;
+		} 
+		
 		$("#codeBtn").click(function(){
+			settime(this);
 			var c=$("#typeid").val();
 			var m=$("#mobile").val();
 			var t=$("#token").val();
@@ -79,50 +95,59 @@
 			var p=$("#password").val();
 			var t=$("#token").val();
 			
-			if(m==""){
-				openDialog('手机号不能为空!');
-				return;
-			}
-			
-			
-			if(c==""){
-				openDialog('验证码不能为空!');
-				return;
-			}
-			if(p==""){
-				openDialog('密码不能为空!');
-				return;
-			}
-			
-			$.ajax({
-				url:'/resetPsd',
-				dataType:'json',
-				type:'post',
-				async:false,
-				data:{
-					mobile:m,
-					password:p,
-					token:t,
-					smscode:c
-				},
-				success:function(data){
-					console.log(data);
-					if(data.success){
-						openDialog(data.errmsg);
-					}else{
-						openDialog("验证码错误");
-					}
+			if (checkMobile()) {
+				if (checkPassword()) {
+					$.ajax({
+						url:'/resetPsd',
+						dataType:'json',
+						type:'post',
+						async:false,
+						data:{
+							mobile:m,
+							password:p,
+							token:t,
+							smscode:c
+						},
+						success:function(data){
+							console.log(data);
+							if(data.success){
+								mydialog("修改密码成功","修改密码成功");
+							}else{
+								mydialog("修改密码失败","验证码错误");
+							}
+						}
+					})
 				}
-			})
+			}
 		})
 	})
 	var dialog = new auiDialog();
-	function openDialog(text){
-		dialog.alert({
-            title:"信息",
-            msg:text,
-            buttons:['确定']
-        })
-	}
+		function mydialog(title,msg)  {
+			dialog.alert({
+			    title:title,
+			    msg:msg,
+			    buttons:['确定']
+			},function(ret){
+			    console.log(ret)
+			})
+		}
+		
+		function checkMobile(){ 
+		    var sMobile = $("#mobile").val(); 
+		    if(!(/^1[3|4|5|8][0-9]\d{8}$/.test(sMobile))){ 
+		    	mydialog("失败","手机号不正确");
+		    	return false;
+		    } 
+		    return true;
+		}		
+		
+		function checkPassword() {
+			var spassword = $("#password").val();
+			if(!(/^\w{6,16}$/.test(spassword))){
+				mydialog("失败","密码在6-16位之间");
+				return false;
+			}
+			return true;
+		}
 </script>
 </html>
