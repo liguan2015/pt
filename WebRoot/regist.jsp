@@ -131,7 +131,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </ul> 
         <br>
         <div>
-        	<label><input type="checkbox" name="protocal">我同意<a href="#">《广东联网售票服务系统》</a></label>
+        	<label><input type="checkbox" name="protocal">我同意<a href="protocal.jsp">《广东联网售票服务系统》</a></label>
         </div>
         <br>
         <div id="registBtn" class="aui-btn aui-btn-info aui-btn-block aui-btn-sm">注册</div>       	
