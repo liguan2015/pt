@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="css/aui.css" />
     <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="/js/aui-dialog.js"></script>
+    <script type="text/javascript" src="/js/tool.js"></script>
 </head>
 <body>
     <header class="aui-bar aui-bar-nav">
@@ -40,7 +41,7 @@
             </li>
             <li class="aui-list-item">
                 <div class="aui-list-item-inner aui-list-item-center aui-list-item-btn">
-                    <div id="loginBtn" class="aui-btn aui-btn-info aui-btn-block">登陆</div>
+                    <div id="loginBtn1" class="aui-btn aui-btn-info aui-btn-block">登陆</div>
                 </div>
             </li>
             <li class="aui-list-item">
@@ -53,60 +54,4 @@
         <div><input id="token" type="hidden" name="token" value="${token}"></div>
     </div>
 </body>
-<script type="text/javascript">
-	$(function(){
-		$("#loginBtn").click(function(){
-			var m=$("#mobile").val();
-			var p=$("#password").val();
-			var t=$("#token").val();
-			
-			$.ajax({
-				url:'/login',
-				dataType:'json',
-				type:'post',
-				async:false,
-				data:{
-					mobile:m,
-					password:p,
-					token:t
-				},
-				success:function(data){
-					console.log(data);
-					if(data.access_token==null){
-						mydialog("登陆失败","手机号或密码不正确");
-					}
-				}
-			})
-		});
-	})
-	var dialog = new auiDialog();
-		function mydialog(title,msg)  {
-			dialog.alert({
-			    title:title,
-			    msg:msg,
-			    buttons:['确定']
-			},function(ret){
-			    console.log(ret)
-			})
-		}
-		
-		function checkMobile(){ 
-		    var sMobile = $("#mobile").val(); 
-		    if(!(/^1[3|4|5|8][0-9]\d{8}$/.test(sMobile))){ 
-		    	mydialog("登陆失败","手机号不正确");
-		    	return false;
-		    } 
-		    return true;
-		}		
-		
-		function checkPassword() {
-			var spassword = $("#password").val();
-			if(!(/^\w{6,16}$/.test(spassword))){
-				mydialog("登陆失败","密码在6-16位之间");
-				return false;
-			}
-			return true;
-		}
-	
-</script>
 </html>

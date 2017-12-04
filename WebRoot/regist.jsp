@@ -10,109 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="css/aui.css" />
 	<script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="/js/aui-dialog.js"></script>
-	<script type="text/javascript"> 
-		var countdown=60; 
-		function settime(obj) { 
-    		if (countdown == 0) { 
-    		    obj.removeAttribute("disabled");    
-    		    obj.value="获取验证码"; 
-    		    countdown = 60; 
-    		    return;
-    		} else { 
-    		    obj.setAttribute("disabled", true); 
-    		    obj.value="重新发送(" + countdown + ")"; 
-    		    countdown--; 
-    		} 
-			setTimeout(function() {settime(obj) },1000) ;
-		} 
-		
-		$(function() {
-	        $("#codeBtn").click(function () {
-	        	settime(this);
-	        	var mo = $("#mobile").val();
-	        	var ty = $("#typeid").val();
-	        	var to = $("#token").val();
-	        	
-	            $.ajax({
-	            	url:'/getCode',
-	                dataType:'json' ,
-	                type:'post',
-	                async:false,
-	                data:{
-	                	mobile:mo,
-	                	typeid:ty,
-	                	token:to
-	                },
-	        	});
-	      	});  
-	        
-	        $("#registBtn").click(function () {
-	        	if($("#protocal").is(':checked')) {
-	        		var smscode = $("#smscode").val();
-		        	var password = $("#password").val();
-		        	var mobile = $("#mobile").val();
-		        	var certno = $("#certno").val();
-		        	var token = $("#token").val();
-		        	
-		        	if(checkMobile()){
-		        		if (checkPassword()) {
-		        			$.ajax({
-				            	url:'/regist',
-				            	type:'post',
-				                dataType:'json' ,//没有这个，将把后台放会的json解析成字符串
-				                data:{
-				                	smscode:smscode,
-				                	password:password,
-				                	mobile:mobile,
-				                	certno:certno,
-				                	token:token,
-				                	},
-				                async:false,//是否异步
-				                success:function(data) {//获得返回值
-				                	if(data.success) {
-				                		mydialog("注册成功","你已注册成功");
-				                	}
-				                	else {
-				                		mydialog("注册失败",data.errmsg);
-				                	}
-				                }
-				            })
-						}
-		        	}
-				}
-	        });
-	    });
-
-		
-		var dialog = new auiDialog();
-		function mydialog(title,msg)  {
-			dialog.alert({
-			    title:title,
-			    msg:msg,
-			    buttons:['确定']
-			},function(ret){
-			    console.log(ret)
-			})
-		}
-		
-		function checkMobile(){ 
-		    var sMobile = $("#mobile").val(); 
-		    if(!(/^1[3|4|5|8][0-9]\d{8}$/.test(sMobile))){ 
-		    	mydialog("注册失败","手机号不正确");
-		    	return false;
-		    } 
-		    return true;
-		}		
-		
-		function checkPassword() {
-			var spassword = $("#password").val();
-			if(!(/^\w{6,16}$/.test(spassword))){
-				mydialog("注册失败","密码在6-16位之间");
-				return false;
-			}
-			return true;
-		}
-	</script>
+	<script type="text/javascript" src="/js/tool.js"></script>
 </head>
 <body>
 	<div>
@@ -164,7 +62,7 @@
         	<li class="aui-list-item">
             	<div class="aui-list-item-inner">                	
                 	<div class="aui-list-item-input">
-                    	<input id="password" type="text" placeholder="请输入密码" required="required">
+                    	<input id="password" type="text" type="password" placeholder="请输入密码" required="required">
                 	</div>
             	</div>
         	</li>
