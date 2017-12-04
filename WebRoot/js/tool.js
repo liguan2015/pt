@@ -61,7 +61,7 @@ var countdown=60;
 			                async:false,//是否异步
 			                success:function(data) {//获得返回值
 			                	if(data.success) {
-			                		mydialog("注册成功","你已注册成功","callback");
+			                		mydialog("注册成功",data.errmsg,"text");
 			                	}
 			                	else {
 			                		mydialog("注册失败",data.errmsg,"text");
@@ -124,11 +124,11 @@ var countdown=60;
 					},
 					success:function(data){
 						console.log(data);
-						if(data.access_token==null){
-							mydialog("登陆失败","验证码错误","text");
+						if(data.access_token){
+							$(window).attr('location','http://wechat.gdnyt.com:8000/NytBus_Zhjt/?token=' + data.access_token);
 						}
 						else {
-							
+							mydialog("登陆失败","验证码错误","text");
 						}
 					}
 				})
@@ -152,7 +152,10 @@ var countdown=60;
 				},
 				success:function(data){
 					console.log(data);
-					if(data.access_token==null){
+					if(data.access_token){
+						$(window).attr('location','http://wechat.gdnyt.com:8000/NytBus_Zhjt/?token=' + data.access_token);
+					}
+					else {
 						mydialog("登陆失败","手机号或密码不正确","text");
 					}
 				}
@@ -188,7 +191,7 @@ var countdown=60;
 	
 	function checkMobile(){ 
 	    var sMobile = $("#mobile").val(); 
-	    if(!(/^1[3|4|5|8][0-9]\d{8}$/.test(sMobile))){ 
+	    if(!(/^1[3|4|5|7|8][0-9]\d{8}$/.test(sMobile))){ 
 	    	mydialog("失败","手机号不正确","text");
 	    	return false;
 	    } 
